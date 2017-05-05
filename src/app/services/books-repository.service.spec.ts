@@ -1,3 +1,5 @@
+import { RecordableStateService } from './recordable-state.service';
+import { StateStoreService } from './state-store.service';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { BooksRepositoryService } from './books-repository.service';
@@ -5,7 +7,7 @@ import { BooksRepositoryService } from './books-repository.service';
 describe('BooksRepositoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BooksRepositoryService]
+      providers: [BooksRepositoryService, StateStoreService, RecordableStateService]
     });
   });
 

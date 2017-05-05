@@ -16,7 +16,7 @@ export class StoreService<T> {
     this.reducers = [];
     this.recordObservable = new BehaviorSubject<RecordableSate<T>>(null);
     
-    this.store = createStore(([...args]) => this.recordReduce.apply(this, args));
+    this.store = createStore((...args) => this.recordReduce.apply(this, args));
     this.store.subscribe(() => {
       this.recordObservable.next(this.getRecord());
     });
@@ -26,12 +26,6 @@ export class StoreService<T> {
     if (initialRecord == null) {
       initialRecord = new RecordableSate<T>();
     }
-
-    if (action == null || action.type == null) {
-      return initialRecord;
-    }
-
-    console.log(action);
 
     const finalState = this.reducers.reduce((state, reducer) => deepFrezze(reducer(state, action)), initialRecord.state);
 
