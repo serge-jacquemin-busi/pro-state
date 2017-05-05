@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action } from '../models/action';
 import { RecordableSate } from '../models/recordable-state';
 import { Injectable } from '@angular/core';
 
@@ -7,7 +7,7 @@ export class RecordableStateService {
 
   constructor() { }
 
- record<T>(entry: T, changeCause: Action, previousRecord: RecordableSate<T>): RecordableSate<T> {
+ record<T>(previousRecord: RecordableSate<T>, entry: T, changeCause: Action = null): RecordableSate<T> {
     return Object.freeze(<RecordableSate<T>>
     {
       state: entry,

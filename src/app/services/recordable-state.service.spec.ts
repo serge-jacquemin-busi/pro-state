@@ -18,7 +18,7 @@ describe('StateService', () => {
 
     // Act
     const record = states
-      .reduce((previousRecord, state) => service.record(state, null, previousRecord), new RecordableSate<number>());
+      .reduce((previousRecord, state) => service.record(previousRecord, state), new RecordableSate<number>());
 
     // Assert
     const recordStates = repetitions.map((_, index) => service.getAncestor(record, index).state);
@@ -32,7 +32,7 @@ describe('StateService', () => {
     const repetitions = new Array(10).fill(0);
     const states = repetitions.map(() => Math.random());
     let record = states
-      .reduce((previousRecord, state) => service.record(state, null, previousRecord), new RecordableSate<number>());
+      .reduce((previousRecord, state) => service.record(previousRecord, state), new RecordableSate<number>());
 
     // Act
     record = service.forgetAncestor(record, ancestorDistance);

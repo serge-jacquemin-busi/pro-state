@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action } from '../models/action';
 
 export class RecordableSate<T> {
     state: T;

@@ -1,3 +1,5 @@
+import { BooksModule } from './books/books.module';
+import { AppRoutingModule } from './app-routing.module';
 import { RecordableStateService } from './services/recordable-state.service';
 import { StateStoreService } from './services/state-store.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +16,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    BooksModule,
+    AppRoutingModule
   ],
   providers: [
     StateStoreService,

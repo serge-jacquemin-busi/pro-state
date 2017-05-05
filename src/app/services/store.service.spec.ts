@@ -1,20 +1,22 @@
+import { RecordableStateService } from './recordable-state.service';
 import { State } from '../models/state';
 import { TestBed, inject } from '@angular/core/testing';
-import { Action } from 'redux';
+import { Action } from '../models/action';
 
 import { StoreService } from './store.service';
 
 describe('StoreService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [StoreService]
+      // Not a true unit test yes since it uses RecordableStateService directly
+      providers: [StoreService, RecordableStateService]
     });
   });
 
   it('should return current sate', inject([StoreService], (service: StoreService<number>) => {
-    // Arrange
+    // Arrangeks
     const state = Math.random();
-    service.addReducer(() => {
+    service.addStateReducer(() => {
       return state;
     });
 
@@ -34,7 +36,7 @@ describe('StoreService', () => {
       type: (Math.random() * 0xFFFFFFFF).toString(16)
     }));
     stateEntries.forEach(stateEntry => {
-      service.addReducer((state: number, action: Action) => {
+      service.addStateReducer((state: number, action: Action) => {
         if (action.type === stateEntry.type)
         {
           return stateEntry.state;
@@ -59,7 +61,7 @@ it('should return reduce sates through reducers', inject([StoreService], (servic
     const initialState = Math.trunc(1000 * Math.random());
     const repetitions = new Array(10).fill(0);
     repetitions.forEach(() => {
-      service.addReducer((state: number, action: Action) => {
+      service.addStateReducer((state: number, action: Action) => {
         if (state == null)
         {
           state = initialState;
@@ -83,7 +85,7 @@ it('should always manage frozen state', inject([StoreService], (service: StoreSe
     const states = new Array<Object>();
     const repetitions = new Array(10).fill(0);
     repetitions.forEach(() => {
-      service.addReducer((state: Object, action: Action) => {
+      service.addStateReducer((state: Object, action: Action) => {
         if (state != null)
         {
           states.push(state);
