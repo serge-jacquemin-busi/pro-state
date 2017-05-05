@@ -1,16 +1,17 @@
+import { Action } from 'redux';
 import { RecordableSate } from '../models/recordable-state';
 import { Injectable } from '@angular/core';
-import deepFreeze = require('deep-freeze');
 
 @Injectable()
 export class RecordableStateService {
 
   constructor() { }
 
- record <T>(entry: T, previousRecord: RecordableSate<T>): RecordableSate<T> {
-    return deepFreeze(<RecordableSate<T>>
+ record<T>(entry: T, changeCause: Action, previousRecord: RecordableSate<T>): RecordableSate<T> {
+    return Object.freeze(<RecordableSate<T>>
     {
       state: entry,
+      changeCause: changeCause,
       previousRecord: previousRecord
     });
   }
@@ -32,7 +33,7 @@ export class RecordableStateService {
       return null;
     }
 
-    return deepFreeze({
+    return Object.freeze({
       ...record,
       previousRecord: this.forgetAncestor(record.previousRecord, distance - 1)}
     );
