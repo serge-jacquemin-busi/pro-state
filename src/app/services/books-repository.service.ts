@@ -11,6 +11,9 @@ export class BooksRepositoryService {
   constructor(private store: StateStoreService) { }
 
   getAllBooks(): Observable<Book[]> {
+    this.store.dispatch({
+      type: 'LOADING'
+    });
     const books: Book[] = [
       {
         id: 1,
@@ -18,7 +21,10 @@ export class BooksRepositoryService {
       }
     ];
     const action = { ...(new BooksAction()), books: books };
-    this.store.dispatch(action);
+    setTimeout(() => 
+      this.store.dispatch(action),
+      2000
+    );
     return this.store.getRecordObservable()
       .filter(record => record.changeCause === action)
       .map(record => record.state.books);
