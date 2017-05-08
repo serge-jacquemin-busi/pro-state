@@ -1,5 +1,5 @@
-import { Book } from '../book';
-import { Action } from '../action';
+import { Book } from '../models/book';
+import { Action } from '../../actions/action';
 
 export class BooksAction implements Action {
     static TYPE = 'RECEIVE_BOOKS';

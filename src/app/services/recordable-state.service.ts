@@ -1,4 +1,4 @@
-import { Action } from '../models/action';
+import { Action } from '../actions/action';
 import { RecordableSate } from '../models/recordable-state';
 import { Injectable } from '@angular/core';
 

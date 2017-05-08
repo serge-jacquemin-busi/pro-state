@@ -1,10 +1,10 @@
-import { ForgetAncestorAction } from '../models/actions/forget-ancestor-action';
+import { ForgetAncestorAction } from '../actions/forget-ancestor-action';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { RecordableStateService } from './recordable-state.service';
 import { RecordableSate } from '../models/recordable-state';
 import { createStore, Store, Reducer } from 'redux';
-import { Action } from '../models/action';
+import { Action } from '../actions/action';
 import * as  deepFrezze from 'deep-freeze';
 
 

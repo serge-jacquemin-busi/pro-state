@@ -2,7 +2,7 @@ import { RecordableSate } from '../models/recordable-state';
 import { RecordableStateService } from './recordable-state.service';
 import { State } from '../models/state';
 import { TestBed, inject } from '@angular/core/testing';
-import { Action } from '../models/action';
+import { Action } from '../actions/action';
 
 import { StoreService } from './store.service';
 

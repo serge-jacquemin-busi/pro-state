@@ -1,4 +1,4 @@
-import { Action } from '../models/action';
+import { Action } from '../actions/action';
 
 export class RecordableSate<T> {
     state: T;

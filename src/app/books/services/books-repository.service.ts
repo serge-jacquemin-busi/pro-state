@@ -1,8 +1,8 @@
-import { BooksAction } from '../models/actions/books-action';
-import { Action } from '../models/action';
+import { BooksAction } from '../actions/books-action';
+import { Action } from '../../actions/action';
 import { Observable } from 'rxjs/Rx';
 import { Book } from '../models/book';
-import { StateStoreService } from './state-store.service';
+import { StateStoreService } from '../../services/state-store.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -27,6 +27,6 @@ export class BooksRepositoryService {
     );
     return this.store.getRecordObservable()
       .filter(record => record.changeCause === action)
-      .map(record => record.state.books);
+      .map(record => record.state.moduleBooks.books);
   }
 }

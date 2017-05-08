@@ -1,6 +1,6 @@
-import { BooksAction } from '../models/actions/books-action';
+import { BooksAction } from './actions/books-action';
 import { State } from '../models/state';
-import { Action } from '../models/action';
+import { Action } from '../actions/action';
 
 export function BooksReducer(state: State, action: Action): State {
     if (state == null) {

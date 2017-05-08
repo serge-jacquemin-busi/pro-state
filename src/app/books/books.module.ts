@@ -1,5 +1,5 @@
 import { BooksReducer } from './books-reducer';
-import { BooksRepositoryService } from '../services/books-repository.service';
+import { BooksRepositoryService } from './services/books-repository.service';
 import { StateStoreService } from '../services/state-store.service';
 import { RouterModule } from '@angular/router';
 import { BooksRoutingModule } from './books-routing.module';

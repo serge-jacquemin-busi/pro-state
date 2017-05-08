@@ -1,5 +1,5 @@
-import { Book } from './book';
+import { ModuleBooks } from '../books/models/module-books';
 
 export class State {
-    books: Book[];
+    moduleBooks: ModuleBooks;
 }
