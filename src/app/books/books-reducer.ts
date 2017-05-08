@@ -9,7 +9,9 @@ export function BooksReducer(state: State, action: Action): State {
 
     switch(action.type) {
         case BooksAction.TYPE:
-            state = {...state, books: (action as BooksAction).books};
+            state = {...state, moduleBooks:
+                { ...(state.moduleBooks), books: (action as BooksAction).books }
+            };
             break;
     }
 
