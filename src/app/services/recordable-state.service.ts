@@ -7,12 +7,13 @@ export class RecordableStateService {
 
   constructor() { }
 
- record<T>(previousRecord: RecordableSate<T>, entry: T, changeCause: Action = null): RecordableSate<T> {
+ record<T>(previousRecord: RecordableSate<T>, entry: T, changeCause: Action = null, errors: ReadonlyArray<any> = null): RecordableSate<T> {
     return Object.freeze(<RecordableSate<T>>
     {
       state: entry,
       changeCause: changeCause,
-      previousRecord: previousRecord
+      previousRecord: previousRecord,
+      errors: errors
     });
   }
 

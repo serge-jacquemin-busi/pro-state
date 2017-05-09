@@ -30,7 +30,7 @@ export class StoreService<T> {
 
   private recordReduce(initialRecord: RecordableSate<T>, action: Action): RecordableSate<T> {
     if (action.type === RecordImportAction.TYPE) {
-      return (action as RecordImportAction<T>).record;
+      return deepFrezze((action as RecordImportAction<T>).record);
     }
 
     if (initialRecord == null) {
@@ -41,9 +41,18 @@ export class StoreService<T> {
       initialRecord = this.recordableStateService.forgetAncestor(initialRecord, (<ForgetAncestorAction>action).distance);
     }
 
-    const finalState = this.reducers.reduce((state, reducer) => deepFrezze(reducer(state, action)), initialRecord.state);
+    const errors = [];
+    const finalState = this.reducers.reduce((state, reducer) => {
+      try {
+        return deepFrezze(reducer(state, action));
+      }
+      catch (e) {
+        errors.push(deepFrezze(e));
+        return state;
+      }
+    }, initialRecord.state);
 
-    return this.recordableStateService.record(initialRecord, finalState, action);
+    return this.recordableStateService.record(initialRecord, finalState, action, Object.freeze(errors));
   }
 
   addStateReducer(reducer: Reducer<T>) {

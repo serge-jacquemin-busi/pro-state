@@ -111,6 +111,21 @@ describe('StoreService', () => {
       // Assert
       expect(this.recordableStateService.record.calls.argsFor(2)[0]).toBe(previousRecord);
     }));
+
+    it('should store errors on preserve state on error', inject([StoreService], (service: StoreService<Object>) => {
+      // Arrangeks
+      const initalState = new Object();
+      service.addStateReducer(state => initalState);
+      const error = new Object();
+      service.addStateReducer(state => { throw error; });
+
+      // Act
+      service.dispatch({ type: null });
+
+      // Assert
+      expect(this.recordableStateService.record.calls.argsFor(1)[1]).toBe(initalState);
+      expect(this.recordableStateService.record.calls.argsFor(1)[3]).toContain(error);
+    }));
   });
 
   describe('forgetAncestor', () => {
@@ -152,6 +167,17 @@ describe('StoreService', () => {
 
       // Assert
       expect(service.getRecord()).toBe(record);
+    }));
+
+    it('should freeze record', inject([StoreService], (service: StoreService<Object>) => {
+      // Arrange
+      const record = new RecordableSate<Object>();
+
+      // Act
+      service.import(record);
+
+      // Assert
+      expect(Object.isFrozen(service.getRecord())).toBeTruthy();
     }));
   });
 });
