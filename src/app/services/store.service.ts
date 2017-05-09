@@ -1,3 +1,4 @@
+import { RecordImportAction } from '../actions/record-import-action';
 import { ForgetAncestorAction } from '../actions/forget-ancestor-action';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
@@ -28,6 +29,10 @@ export class StoreService<T> {
   }
 
   private recordReduce(initialRecord: RecordableSate<T>, action: Action): RecordableSate<T> {
+    if (action.type === RecordImportAction.TYPE) {
+      return (action as RecordImportAction<T>).record;
+    }
+
     if (initialRecord == null) {
       initialRecord = new RecordableSate<T>();
     }
@@ -63,5 +68,10 @@ export class StoreService<T> {
 
   getRecordObservable(): Observable<RecordableSate<T>> {
     return this.recordObservable.asObservable();
+  }
+
+  import(record: RecordableSate<T>): Action {
+    const action = { ...(new RecordImportAction()), record: record };
+    return this.dispatch(action);
   }
 }

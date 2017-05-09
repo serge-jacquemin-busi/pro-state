@@ -141,4 +141,17 @@ describe('StoreService', () => {
       expect(this.recordableStateService.record.calls.argsFor(1)[0]).toBe(amnesicRecord);
     }));
   });
+
+  describe('import', () => {
+    it('should properly set lattest record', inject([StoreService], (service: StoreService<Object>) => {
+      // Arrange
+      const record = new RecordableSate<Object>();
+
+      // Act
+      service.import(record);
+
+      // Assert
+      expect(service.getRecord()).toBe(record);
+    }));
+  });
 });

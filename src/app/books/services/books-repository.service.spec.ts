@@ -1,3 +1,4 @@
+import { Http } from '@angular/http';
 import { StateStoreService } from '../../services/state-store.service';
 import { TestBed, inject } from '@angular/core/testing';
 
@@ -8,10 +9,17 @@ describe('BooksRepositoryService', () => {
     'dispatch',
     'getRecordObservable'
   ]);
+  this.http = jasmine.createSpyObj('http', [
+    'get'
+  ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BooksRepositoryService, { provide: StateStoreService, useValue: this.stateStoreService }]
+      providers: [
+        BooksRepositoryService,
+        { provide: StateStoreService, useValue: this.stateStoreService },
+        { provide: Http, useValue: this.http }
+      ]
     });
   });
 

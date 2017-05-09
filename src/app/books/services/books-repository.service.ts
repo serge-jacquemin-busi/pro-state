@@ -19,11 +19,10 @@ export class BooksRepositoryService {
     this.http.get(`http://localhost:46898/api/books`)
       .subscribe(resp => {
         action.books = resp.json().data;
-        console.log(action);
         this.store.dispatch(action)
       });
     return this.store.getRecordObservable()
-      .filter(record => record.changeCause === action)
+      .first(record => record.changeCause === action)
       .map(record => record.state.moduleBooks.books);
   }
 }
