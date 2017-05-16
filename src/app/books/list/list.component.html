@@ -1,9 +1,9 @@
 <p>
   list works!
 </p>
-<div *ngIf="books != null">
-  <ul>
-    <li *ngFor="let book of books | async">
+<div *ngIf="nBooks != null">
+    <ul>
+    <li *ngFor="let book of nBooks | async">
       {{ book.id }} : {{ book.name }}
     </li>
   </ul>

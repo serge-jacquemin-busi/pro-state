@@ -8,24 +8,27 @@ import { createStore, Store, Reducer } from 'redux';
 import { Action } from '../actions/action';
 import * as  deepFrezze from 'deep-freeze';
 
+export abstract class TypeLessStoreService {
+  abstract getRecordObservableForType<U>(): Observable<RecordableSate<U>>;
+};
 
 @Injectable()
-export class StoreService<T> {
-
+export class StoreService<T> extends TypeLessStoreService {
   private store: Store<RecordableSate<T>>;
   private reducers: Reducer<T>[];
   private recordObservable: BehaviorSubject<RecordableSate<T>>;
-  
+
   constructor(private recordableStateService: RecordableStateService) {
+    super();
+
     this.reducers = [];
     this.recordObservable = new BehaviorSubject<RecordableSate<T>>(null);
 
     this.store = createStore((...args) => this.recordReduce.apply(this, args));
     this.store.subscribe(() => {
+      console.log('new record');
       this.recordObservable.next(this.getRecord());
     });
-
-    // this.recordObservable.subscribe(console.log);
   }
 
   private recordReduce(initialRecord: RecordableSate<T>, action: Action): RecordableSate<T> {
@@ -83,4 +86,13 @@ export class StoreService<T> {
     const action = { ...(new RecordImportAction()), record: record };
     return this.dispatch(action);
   }
+
+  getRecordObservableForType<U>(): Observable<RecordableSate<U>> {
+    try {
+      return (this.getRecordObservable() as any) as Observable<RecordableSate<U>>;
+    }
+    catch (e) {
+      return Observable.empty<RecordableSate<U>>();
+    }
+  }  
 }

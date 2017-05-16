@@ -1,3 +1,5 @@
+import { State } from './models/state';
+import { StoreService, TypeLessStoreService } from './services/store.service';
 import { IntegratedHttpModule } from './integrated-http/integrated-http.module';
 import { BooksModule } from './books/books.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -8,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { fromStore } from './decorators/from-store-decorator';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     StateStoreService,
-    RecordableStateService
+    RecordableStateService,
+    { provide: TypeLessStoreService, useClass: StateStoreService, multi: false }
   ],
   bootstrap: [AppComponent]
 })
