@@ -2,6 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { ngModuleJitUrl } from '@angular/compiler/compiler';
 import { enableProdMode, Injector } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { observeInjection } from './app/utils/injector-observable';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
@@ -12,16 +13,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-
-
-const injectorSubject = new BehaviorSubject<Injector>(null);
-export let injectorObservable = injectorSubject.filter(v => v != null);
-
 console.log('main');
 
-
-platformBrowserDynamic().bootstrapModule(AppModule).then(ngModule => 
-  injectorSubject.next(ngModule.injector)
-);
-
-injectorSubject.subscribe(x => console.log('??'));
+platformBrowserDynamic().bootstrapModule(AppModule).then(observeInjection);

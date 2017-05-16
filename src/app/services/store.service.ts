@@ -16,18 +16,19 @@ export abstract class TypeLessStoreService {
 export class StoreService<T> extends TypeLessStoreService {
   private store: Store<RecordableSate<T>>;
   private reducers: Reducer<T>[];
-  private recordObservable: BehaviorSubject<RecordableSate<T>>;
+  private recordSubject: BehaviorSubject<RecordableSate<T>>;
+  private recordObservable: Observable<RecordableSate<T>>;
 
   constructor(private recordableStateService: RecordableStateService) {
     super();
 
     this.reducers = [];
-    this.recordObservable = new BehaviorSubject<RecordableSate<T>>(null);
+    this.recordSubject = new BehaviorSubject<RecordableSate<T>>(null);
+    this.recordObservable = this.recordSubject.asObservable();
 
     this.store = createStore((...args) => this.recordReduce.apply(this, args));
     this.store.subscribe(() => {
-      console.log('new record');
-      this.recordObservable.next(this.getRecord());
+      this.recordSubject.next(this.getRecord());
     });
   }
 
@@ -79,7 +80,7 @@ export class StoreService<T> extends TypeLessStoreService {
   }
 
   getRecordObservable(): Observable<RecordableSate<T>> {
-    return this.recordObservable.asObservable();
+    return this.recordObservable;
   }
 
   import(record: RecordableSate<T>): Action {
@@ -89,7 +90,7 @@ export class StoreService<T> extends TypeLessStoreService {
 
   getRecordObservableForType<U>(): Observable<RecordableSate<U>> {
     try {
-      return (this.getRecordObservable() as any) as Observable<RecordableSate<U>>;
+      return  (this.getRecordObservable() as any) as Observable<RecordableSate<U>>;
     }
     catch (e) {
       return Observable.empty<RecordableSate<U>>();

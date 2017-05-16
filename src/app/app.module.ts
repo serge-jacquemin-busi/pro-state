@@ -26,7 +26,7 @@ import { fromStore } from './decorators/from-store-decorator';
   providers: [
     StateStoreService,
     RecordableStateService,
-    { provide: TypeLessStoreService, useClass: StateStoreService, multi: false }
+    { provide: TypeLessStoreService, useExisting: StateStoreService, multi: false }
   ],
   bootstrap: [AppComponent]
 })
