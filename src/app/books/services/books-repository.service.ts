@@ -11,7 +11,7 @@ export class BooksRepositoryService {
 
   constructor(private store: StateStoreService, private http: Http) { }
 
-  getAllBooks(): Observable<Book[]> {
+  getAllBooks(): BooksAction {
     this.store.dispatch({
       type: 'LOADING'
     });
@@ -21,8 +21,6 @@ export class BooksRepositoryService {
         action.books = resp.json().data;
         this.store.dispatch(action)
       });
-    return this.store.getRecordObservable()
-      .first(record => record.changeCause === action)
-      .map(record => record.state.moduleBooks.books);
+    return action;
   }
 }

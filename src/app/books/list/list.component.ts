@@ -15,7 +15,6 @@ import { Component, OnInit } from '@angular/core';
 export class ListComponent implements OnInit {
   @fromStore((state: State) => state.moduleBooks.books)
   readonly nBooks: Observable<Book[]>;
-  books: Observable<Book[]>;
 
   constructor(
     public store: StateStoreService,
@@ -25,6 +24,6 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.books = this.booksRepositoryService.getAllBooks();
+    this.booksRepositoryService.getAllBooks();
   }
 }
