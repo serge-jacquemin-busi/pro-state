@@ -1,0 +1,4 @@
+<a [href]="exportUrl | async" download="state_{{ date | async  | date: 'yMdHms' }}.json">Export</a>
+<button (click)="import()">Import</button>
+<input type="file" (change)="fileChange($event)" accept="application/json"/>
+

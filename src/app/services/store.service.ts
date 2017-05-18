@@ -30,6 +30,7 @@ export class StoreService<T> extends TypeLessStoreService {
     this.store.subscribe(() => {
       this.recordSubject.next(this.getRecord());
     });
+    this.recordSubject.next(this.getRecord());
   }
 
   private recordReduce(initialRecord: RecordableSate<T>, action: Action): RecordableSate<T> {

@@ -7,18 +7,21 @@ import { RecordableStateService } from './services/recordable-state.service';
 import { StateStoreService } from './services/state-store.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { fromStore } from './decorators/from-store-decorator';
+import { MigrateStateComponent } from './migrate-state/migrate-state.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MigrateStateComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     IntegratedHttpModule,
     BooksModule,
     AppRoutingModule
